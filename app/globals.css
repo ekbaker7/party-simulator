@@ -25,3 +25,17 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@layer components {
+  .btn {
+    @apply tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase p-4 rounded-md transition-colors block;
+  }
+
+  .btn:hover {
+    @apply no-underline
+  }
+
+  .btn:disabled {
+    @apply bg-green-200 cursor-not-allowed
+  }
+}
