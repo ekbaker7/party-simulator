@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId, FindOptions, WithId } from "mongodb";
+import { MongoClient, ObjectId, FindOptions } from "mongodb";
 
 export async function connectDatabase() {
   const MONGO_USERNAME = process.env.NEXT_PUBLIC_MONGO_USERNAME;
