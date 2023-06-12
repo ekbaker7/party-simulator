@@ -2,8 +2,9 @@ import Image from "next/image";
 import Resources from "../data/resources";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
+import LoginArea from "../components/landing-page/LoginArea";
 
-export default function Home() {
+export default function Landing() {
   return (
     <main className="flex min-h-screen bg-slate-600 h-screen w-screen overflow-hidden">
       <div className="w-full font-mono lg:flex h-screen">
@@ -31,20 +32,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full font-mono lg:flex h-screen">
-        <div className="z-10 px-10 py-5 w-5/12 text-center bg-slate-300 rounded-md blackdrop-blur-sm h-1/3 min-h-[200px] mr-24 absolute bottom-[5rem]">
-          <div className="relative h-full w-full">
-            <div className="relative top-1/2 -translate-y-1/2">
-              <button className="btn bg-blue-800 hover:bg-blue-900">
-                {Resources.LOGIN_BTN}
-              </button>
-              <button className="btn bg-green-800 hover:bg-green-900 mt-10">
-                {Resources.SIGNUP_BTN}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <LoginArea />
     </main>
   );
 }

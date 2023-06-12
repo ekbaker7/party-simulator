@@ -63,7 +63,7 @@ export async function getDocumentForCollection(
 ): Promise<any | null> {
   const db = client.db();
 
-  const document = await db.collection(collection).findOne({ criteria }, options);
+  const document = await db.collection(collection).findOne(criteria, options);
 
   return document;
 }
@@ -71,4 +71,16 @@ export async function getDocumentForCollection(
 // close database connection
 export async function closeDatabaseConnection(client: MongoClient) {
   await client.close();
+}
+
+// update collection document by Id and return updated document
+export async function updateDocumentByIdAndReturn(client: MongoClient, collection: string, id: ObjectId, updatedFields: any): Promise<any> {
+  const db = client.db();
+
+  const updatedDocument = await db.collection(collection).findOneAndUpdate(
+    { _id: id },
+    { $set: updatedFields }
+  );
+
+  return updatedDocument;
 }
