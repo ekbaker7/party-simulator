@@ -6,6 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import PasswordChangeInputs from "@/components/profile-page/PasswordChangeInputs";
 import { Alert } from "@mui/material";
+import Resources from "@/data/resources";
 
 function ProfilePage(props: any) {
   const { loading, user, error } = useContext(AuthenticationContext);
@@ -46,7 +47,7 @@ function ProfilePage(props: any) {
       newPassword: "",
       confirmPassword: "",
     });
-  }
+  };
 
   const handleClick = async () => {
     if (user && inputs.newPassword !== inputs.oldPassword) {
@@ -58,14 +59,14 @@ function ProfilePage(props: any) {
       });
 
       if (response?.success) {
-        setSuccessAlert("Password changed successfully!")
-        clearInputs()
+        setSuccessAlert("Password changed successfully!");
+        clearInputs();
       }
     }
   };
 
   return (
-    <div className="bg-slate-600 h-screen w-full">
+    <div className="bg-slate-600 h-[calc(100vh-50px)] w-full overflow-hidden">
       {successAlert && (
         <Alert severity="success" className="mb-9">
           {successAlert}
@@ -76,11 +77,15 @@ function ProfilePage(props: any) {
           {error}
         </Alert>
       )}
-      <div className="flex justify-between items-center h-screen w-full p-10">
+      <div className="flex justify-between items-center h-full w-full p-10 overflow-hidden">
         {user && (
-          <div className="bg-slate-900 text-white m-auto h-full text-center">
-            <h1 className="text-3xl">Hello, {user.username}!</h1>
-            <h2 className="font-xl">Change Your Password</h2>
+          <div className="bg-slate-900 text-white m-auto text-center p-4">
+            <h1 className="text-3xl border-b">
+              {Resources.PROFILE_HELLO_PROMPT} {user.username}!
+            </h1>
+            <h2 className="font-xl mt-5">
+              {Resources.PROFILE_CHANGE_PASSWORD_HEADER}
+            </h2>
             <div className="text-black">
               <PasswordChangeInputs
                 inputs={inputs}
@@ -88,7 +93,13 @@ function ProfilePage(props: any) {
               />
             </div>
             <div className="">
-              <button className="btn" disabled={disabled} onClick={handleClick}>Change Password</button>
+              <button
+                className="btn bg-green-500"
+                disabled={disabled}
+                onClick={handleClick}
+              >
+                Change Password
+              </button>
             </div>
           </div>
         )}

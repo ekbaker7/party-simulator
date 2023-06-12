@@ -4,6 +4,8 @@ import { useContext, useEffect } from "react";
 import { AuthenticationContext } from "@/context/AuthContext";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import Resources from "@/data/resources";
+import NavBarItem from "./NavBarItem";
 
 function NavBar() {
   const { loading, user, error } = useContext(AuthenticationContext);
@@ -23,10 +25,11 @@ function NavBar() {
   return (
     <nav className="bg-slate-900 text-white p-2 flex justify-between">
       <Link href="/home" className="font-bold text-white font-mono text-2xl">
-        RPG Party Simulator
+        { Resources.HOME_PAGE_HEADER }
       </Link>
-      <ul className="my-auto text-left cursor-pointer">
-        <li>Characters</li>
+      <ul className="my-auto text-left cursor-pointer flex-grow">
+        <NavBarItem resourceString={Resources.NAVBAR_MENU_ITEM_CHARACTERS } href="/home" />
+        <NavBarItem resourceString={Resources.NAVBAR_MENU_ITEM_EVENTS } href="/home" />
       </ul>
       <div>
         {loading ? null : (

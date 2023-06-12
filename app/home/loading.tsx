@@ -1,7 +1,7 @@
 function LoadingHome() {
   return (
-    <div>
-      <div className="animate-pulse">Loading...</div>
+    <div className="bg-slate-600 h-[calc(100vh-50px)] overflow-hidden">
+      <div className="animate-pulse h-full">Loading...</div>
     </div>
   );
 }

@@ -9,6 +9,10 @@ export const Resources: { [key: string]: string } = {
   LOGIN_PROMPT: "Login to Your Account",
   SIGNUP_PROMPT: "Create Your Account",
   CREATE_ACCOUNT_BTN: "Create Account",
+  NAVBAR_MENU_ITEM_CHARACTERS: `Characters`,
+  NAVBAR_MENU_ITEM_EVENTS: `Events`,
+  PROFILE_CHANGE_PASSWORD_HEADER: "Change Your Password",
+  PROFILE_HELLO_PROMPT: "Hello, ",
 };
 
 export default Resources;
