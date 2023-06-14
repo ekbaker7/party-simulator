@@ -58,7 +58,8 @@ export interface EquipmentType {
     price: number;
 }
 
-export interface CharacterType {
+export interface CharacterType extends WithId<Document> {
+    userId: ObjectId;
     firstName: string;
     surname: string;
     nickname: string;

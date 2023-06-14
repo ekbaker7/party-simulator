@@ -3,7 +3,7 @@ import {
   generateJWT,
   hashPassword,
 } from "../../../lib/authUtils";
-import { fetchUserByEmailOrUsername, saveNewUser } from "@/lib/repositories/userRepository";
+import UserRepository from "@/lib/repositories/userRepository";
 import validator from "validator";
 import { UserInfoType, NewUserToSaveType } from "../../../data/dbModels";
 import { setCookie } from "cookies-next"
@@ -49,7 +49,9 @@ export default async function handler(
       return;
     }
 
-    const existingUser = await fetchUserByEmailOrUsername(email, username);
+    const userRepository = new UserRepository();
+
+    const existingUser = await userRepository.fetchUserByEmailOrUsername(email, username);
 
     if (existingUser) {
       res
@@ -66,7 +68,7 @@ export default async function handler(
       password: hashedPassword,
     };
 
-    const savedUser = await saveNewUser(newUser);
+    const savedUser = await userRepository.saveNewDocument(newUser);
 
     const jwtToken = await generateJWT(savedUser.email)
 

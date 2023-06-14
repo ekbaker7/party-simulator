@@ -1,11 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { hashPassword, verifyPassword } from "../../../lib/authUtils";
-import {
-  fetchUserByUsername,
-  updateUser,
-} from "@/lib/repositories/userRepository";
+import UserRepository from "@/lib/repositories/userRepository";
 import validator from "validator";
-import { UserInfoType, UpdateUserType } from "../../../data/dbModels";
+import { UpdateUserType } from "../../../data/dbModels";
 
 export default async function handler(
   req: NextApiRequest,
@@ -50,7 +47,9 @@ export default async function handler(
       return;
     }
 
-    const existingUser = await fetchUserByUsername(username);
+    const userRepository = new UserRepository();
+
+    const existingUser = await userRepository.fetchUserByUsername(username);
 
     if (!existingUser) {
       res
@@ -75,7 +74,8 @@ export default async function handler(
       password: hashedPassword,
     };
 
-    const updatedUser = await updateUser(existingUser._id, updatedPassword);
+    // Maybe return validation here in the future?
+    const updatedUser = await userRepository.updateDocumentByIdAndReturn(existingUser._id, updatedPassword);
 
     res.status(200).json({ success: true });
     return;

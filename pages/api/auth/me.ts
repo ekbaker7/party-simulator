@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { decodeToken } from "../../../lib/authUtils";
-import { fetchUserByEmail } from "../../../lib/repositories/userRepository";
+import UserRepository from "@/lib/repositories/userRepository";
 import { UserInfoType } from "../../../data/dbModels";
 
 export default async function handler(
@@ -20,7 +20,9 @@ export default async function handler(
     return;
   }
 
-  const existingUser = await fetchUserByEmail(returnedObj.payload.email);
+  const userRepository = new UserRepository();
+
+  const existingUser = await userRepository.fetchUserByEmail(returnedObj.payload.email);
 
   if (!existingUser) {
     res.status(401).json({ errorMessage: "Unauthorized request" });

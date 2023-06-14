@@ -3,7 +3,7 @@ import {
   generateJWT,
   verifyPassword,
 } from "../../../lib/authUtils";
-import { fetchUserByUsername } from "@/lib/repositories/userRepository";
+import UserRepository from "@/lib/repositories/userRepository";
 import { UserInfoType } from "../../../data/dbModels";
 import validator from "validator";
 import {setCookie} from "cookies-next"
@@ -42,7 +42,9 @@ export default async function handler(
       return;
     }
 
-    const existingUser = await fetchUserByUsername(username);
+    const userRepository = new UserRepository();
+
+    const existingUser = await userRepository.fetchUserByUsername(username);
 
     if (!existingUser) {
       res
