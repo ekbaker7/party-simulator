@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangePasswordType, NewUserType } from "../lib/dbModels";
+import { ChangePasswordType, NewUserType } from "../data/dbModels";
 import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
 import { deleteCookie } from "cookies-next";

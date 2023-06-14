@@ -5,7 +5,7 @@ import {
 } from "../../../lib/authUtils";
 import { fetchUserByEmailOrUsername, saveNewUser } from "@/lib/repositories/userRepository";
 import validator from "validator";
-import { UserInfoType, NewUserToSaveType } from "../../../lib/dbModels";
+import { UserInfoType, NewUserToSaveType } from "../../../data/dbModels";
 import { setCookie } from "cookies-next"
 
 export default async function handler(

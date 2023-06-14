@@ -4,7 +4,7 @@ import {
   verifyPassword,
 } from "../../../lib/authUtils";
 import { fetchUserByUsername } from "@/lib/repositories/userRepository";
-import { UserInfoType } from "../../../lib/dbModels";
+import { UserInfoType } from "../../../data/dbModels";
 import validator from "validator";
 import {setCookie} from "cookies-next"
 

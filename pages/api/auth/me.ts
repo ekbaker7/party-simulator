@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { decodeToken } from "../../../lib/authUtils";
 import { fetchUserByEmail } from "../../../lib/repositories/userRepository";
-import { UserInfoType } from "../../../lib/dbModels";
+import { UserInfoType } from "../../../data/dbModels";
 
 export default async function handler(
   req: NextApiRequest,

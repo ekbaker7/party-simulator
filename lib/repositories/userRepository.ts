@@ -1,4 +1,4 @@
-import { UserInfoType, NewUserToSaveType, UpdateUserType } from "../dbModels";
+import { UserInfoType, NewUserToSaveType, UpdateUserType } from "../../data/dbModels";
 import { FindOptions, ObjectId } from "mongodb";
 import {
   connectDatabase,

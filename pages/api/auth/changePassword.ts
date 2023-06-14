@@ -5,7 +5,7 @@ import {
   updateUser,
 } from "@/lib/repositories/userRepository";
 import validator from "validator";
-import { UserInfoType, UpdateUserType } from "../../../lib/dbModels";
+import { UserInfoType, UpdateUserType } from "../../../data/dbModels";
 
 export default async function handler(
   req: NextApiRequest,

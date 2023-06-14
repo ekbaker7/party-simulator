@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, createContext, useEffect } from "react";
-import { UserInfoType } from "../lib/dbModels";
+import { UserInfoType } from "../data/dbModels";
 import axios from 'axios'
 import { getCookie } from "cookies-next"
 
