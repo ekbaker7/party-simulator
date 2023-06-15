@@ -1,11 +1,12 @@
 "use client";
 
+import { CharacterModel } from "@/data/database-models/characterModels";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function NewCharacterPage() {
-  const [character, setCharacter] = useState(null);
+  const [character, setCharacter] = useState<CharacterModel | null>(null);
 
   const fetchData = async () => {
     const jwt = getCookie("jwt");
@@ -27,15 +28,46 @@ function NewCharacterPage() {
   };
 
   const clickHandler = async () => {
-    await fetchData()
-  }
-
-  console.log({ character })
+    await fetchData();
+  };
 
   return (
     <div className="bg-slate-600 h-[calc(100vh-50px)] overflow-hidden">
-      {character && <span>{JSON.stringify(character)}</span>}
-      <button className="btn bg-green-600" onClick={clickHandler}>Click me</button>
+      {character && (
+        <div>
+          <h1>{character.firstName} "{character.nickname}" {character.surname}, Aged {character.age}</h1>
+          <h2>"{character.quote}"</h2>
+          <div>
+            {character.pronouns}, interested in {character.interestedIn.join(", ")}
+          </div>
+          <div>
+            {character.class} | {character.profession}
+          </div>
+          <div>
+            <h2>Stats</h2>
+            <p>
+              Physical: {character.stats.physical}
+            </p>
+            <p>
+              Magical: {character.stats.magical}
+            </p>
+            <p>
+              Charisma: {character.stats.charisma}
+            </p>
+          </div>
+          <div>
+            <h2>Equipment</h2>
+            {character.equipment.map((item) => (
+              <div key={`equip-${item.id}`}>
+                {item.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <button className="btn bg-green-600" onClick={clickHandler}>
+        Generate
+      </button>
     </div>
   );
 }
