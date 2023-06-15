@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, createContext, useEffect } from "react";
-import { UserInfoType } from "../data/dbModels";
+import { UserInfoModel } from "../data/database-models/userModels";
 import axios from 'axios'
 import { getCookie } from "cookies-next"
 
 interface State {
   loading: boolean;
   error: string | null;
-  user: UserInfoType | null;
+  user: UserInfoModel | null;
 }
 
 interface AuthState extends State {

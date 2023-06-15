@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { hashPassword, verifyPassword } from "../../../lib/authUtils";
 import UserRepository from "@/lib/repositories/userRepository";
 import validator from "validator";
-import { UpdateUserType } from "../../../data/dbModels";
+import { UpdateUserModel } from "../../../data/database-models/userModels";
 
 export default async function handler(
   req: NextApiRequest,
@@ -70,7 +70,7 @@ export default async function handler(
 
     const hashedPassword = await hashPassword(newPassword);
 
-    const updatedPassword: UpdateUserType = {
+    const updatedPassword: UpdateUserModel = {
       password: hashedPassword,
     };
 

@@ -4,7 +4,7 @@ import {
   verifyPassword,
 } from "../../../lib/authUtils";
 import UserRepository from "@/lib/repositories/userRepository";
-import { UserInfoType } from "../../../data/dbModels";
+import { UserInfoModel } from "../../../data/database-models/userModels";
 import validator from "validator";
 import {setCookie} from "cookies-next"
 
@@ -67,7 +67,7 @@ export default async function handler(
 
     setCookie("jwt", jwtToken, { req, res, maxAge: 60 * 6 * 24})
 
-    const userInfo: UserInfoType = {
+    const userInfo: UserInfoModel = {
       _id: existingUser._id,
       email: existingUser.email,
       username: existingUser.username,

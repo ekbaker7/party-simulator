@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { decodeToken } from "../../../lib/authUtils";
 import UserRepository from "@/lib/repositories/userRepository";
-import { UserInfoType } from "../../../data/dbModels";
+import { UserInfoModel } from "../../../data/database-models/userModels";
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,7 +29,7 @@ export default async function handler(
     return;
   }
 
-  const userInfo: UserInfoType = {
+  const userInfo: UserInfoModel = {
     _id: existingUser._id,
     username: existingUser.username,
     email: existingUser.email

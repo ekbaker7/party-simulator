@@ -1,14 +1,14 @@
 import { FindOptions } from "mongodb";
 import BaseRepository from "./baseRepository";
-import { UserInfoType } from "@/data/dbModels";
+import { UserInfoModel } from "@/data/database-models/userModels";
 
 export default class UserRepository extends BaseRepository {
     constructor() {
         super("users");
     }
 
-    fetchUserByEmail = async (email: string): Promise<UserInfoType | null> => {
-      let findOptions: FindOptions<UserInfoType> = {
+    fetchUserByEmail = async (email: string): Promise<UserInfoModel | null> => {
+      let findOptions: FindOptions<UserInfoModel> = {
         projection: { email: 1, username: 1, password: 1 },
       };
     
@@ -17,11 +17,11 @@ export default class UserRepository extends BaseRepository {
         findOptions
       );
     
-      return user as UserInfoType | null;
+      return user as UserInfoModel | null;
     }
 
-    fetchUserByUsername = async (username: string): Promise<UserInfoType | null> => {
-      let findOptions: FindOptions<UserInfoType> = {
+    fetchUserByUsername = async (username: string): Promise<UserInfoModel | null> => {
+      let findOptions: FindOptions<UserInfoModel> = {
         projection: { email: 1, username: 1, password: 1 },
       };
     
@@ -30,13 +30,13 @@ export default class UserRepository extends BaseRepository {
         findOptions
       );
     
-      return user as UserInfoType | null;
+      return user as UserInfoModel | null;
     }
 
     fetchUserByEmailOrUsername = async (
       email: string,
       username: string
-    ): Promise<UserInfoType | null> => {
+    ): Promise<UserInfoModel | null> => {
       let filterOptions = {
         $or: [
           {
@@ -48,7 +48,7 @@ export default class UserRepository extends BaseRepository {
         ],
       };
     
-      let findOptions: FindOptions<UserInfoType> = {
+      let findOptions: FindOptions<UserInfoModel> = {
         projection: { email: 1, username: 1, password: 1 },
       };
     
@@ -57,6 +57,6 @@ export default class UserRepository extends BaseRepository {
         findOptions
       );
     
-      return user as UserInfoType | null;
+      return user as UserInfoModel | null;
     }
 }

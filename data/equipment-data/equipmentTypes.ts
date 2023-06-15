@@ -1,49 +1,52 @@
+export enum EquipmentTypesList {
+  OneHanded = "OneHanded",
+  TwoHanded = "TwoHanded",
+  Head = "Head",
+  Body = "Body",
+  Hands = "Hands",
+  Legs = "Legs",
+  Feet = "Feet",
+  Accessory = "Accessory"
+}
+
 export const EquipmentTypes: {
   [key: string]: {
     maxEquippable: number;
     conflictsWith: string[];
   };
 } = {
-  "1-Handed": {
+  OneHanded: {
     maxEquippable: 2,
-    conflictsWith: ["2-Handed", "shield", "offhand"],
+    conflictsWith: [EquipmentTypesList.TwoHanded],
   },
-  "2-Handed": {
+  TwoHanded: {
     maxEquippable: 1,
-    conflictsWith: ["1-Handed", "shield", "offhand"],
+    conflictsWith: [EquipmentTypesList.OneHanded],
   },
-  shield: {
-    maxEquippable: 1,
-    conflictsWith: ["1-Handed", "2-Handed", "offhand"],
-  },
-  offhand: {
-    maxEquippable: 1,
-    conflictsWith: ["1-Handed", "2-Handed", "shield"],
-  },
-  head: {
+  Head: {
     maxEquippable: 1,
     conflictsWith: [],
   },
-  body: {
+  Body: {
     maxEquippable: 1,
     conflictsWith: [],
   },
-  hands: {
+  Hands: {
     maxEquippable: 1,
     conflictsWith: [],
   },
-  legs: {
+  Legs: {
     maxEquippable: 1,
     conflictsWith: [],
   },
-  feet: {
+  Feet: {
     maxEquippable: 1,
     conflictsWith: [],
   },
-  accessory: {
+  Accessory: {
     maxEquippable: 2,
     conflictsWith: [],
   }
 };
 
-export default EquipmentTypes;
+export default EquipmentTypesList;

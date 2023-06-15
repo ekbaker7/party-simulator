@@ -5,7 +5,7 @@ import {
 } from "../../../lib/authUtils";
 import UserRepository from "@/lib/repositories/userRepository";
 import validator from "validator";
-import { UserInfoType, NewUserToSaveType } from "../../../data/dbModels";
+import { UserInfoModel, NewUserToSaveModel } from "../../../data/database-models/userModels";
 import { setCookie } from "cookies-next"
 
 export default async function handler(
@@ -62,7 +62,7 @@ export default async function handler(
 
     const hashedPassword = await hashPassword(password);
 
-    const newUser: NewUserToSaveType = {
+    const newUser: NewUserToSaveModel = {
       username,
       email,
       password: hashedPassword,
@@ -74,7 +74,7 @@ export default async function handler(
 
     setCookie("jwt", jwtToken, { req, res, maxAge: 60 * 6 * 24})
 
-    const userInfo: UserInfoType = {
+    const userInfo: UserInfoModel = {
       _id: savedUser._id,
       email: savedUser.email,
       username: savedUser.username

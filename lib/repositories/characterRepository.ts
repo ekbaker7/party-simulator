@@ -1,4 +1,4 @@
-import { CharacterType } from "@/data/dbModels";
+import { CharacterModel } from "@/data/database-models/characterModels";
 import BaseRepository from "./baseRepository";
 
 export default class CharacterRepository extends BaseRepository {
@@ -6,11 +6,11 @@ export default class CharacterRepository extends BaseRepository {
         super("characters");
     }
 
-    fetchAllCharactersForUser = async (userId: string): Promise<CharacterType[]> => {
+    fetchAllCharactersForUser = async (userId: string): Promise<CharacterModel[]> => {
         if (!this.client) {
             await this.connectDatabase();
         }
         const documents = await this.fetchAll({ userId: this.convertToObjectId(userId) });
-        return documents as CharacterType[];
+        return documents as CharacterModel[];
     }
 }

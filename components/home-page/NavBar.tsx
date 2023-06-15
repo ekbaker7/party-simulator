@@ -28,7 +28,7 @@ function NavBar() {
         { Resources.HOME_PAGE_HEADER }
       </Link>
       <ul className="my-auto text-left cursor-pointer flex-grow">
-        <NavBarItem resourceString={Resources.NAVBAR_MENU_ITEM_CHARACTERS } href="/home" />
+        <NavBarItem resourceString={Resources.NAVBAR_MENU_ITEM_CHARACTERS } href="/characters/new" />
         <NavBarItem resourceString={Resources.NAVBAR_MENU_ITEM_EVENTS } href="/home" />
       </ul>
       <div>

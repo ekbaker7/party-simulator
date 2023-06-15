@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangePasswordType, NewUserType } from "../data/dbModels";
+import { ChangePasswordModel, NewUserModel } from "../data/database-models/userModels";
 import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
 import { deleteCookie } from "cookies-next";
@@ -40,7 +40,7 @@ const useAuth = () => {
     }
   };
 
-  const signUp = async (newUser: NewUserType, handleClose: () => void) => {
+  const signUp = async (newUser: NewUserModel, handleClose: () => void) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_HOST}/api/auth/signup`,
@@ -66,7 +66,7 @@ const useAuth = () => {
     });
   };
 
-  const changePassword = async (newPasswordInfo: ChangePasswordType) => {
+  const changePassword = async (newPasswordInfo: ChangePasswordModel) => {
     try {
       setAuthState({ loading: true, user: user, error: null });
 
