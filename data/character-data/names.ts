@@ -14,7 +14,7 @@ export const FirstNames: { [key: string]: string[] } = {
     "Brittany",
     "Alexandra",
     "Isabelle",
-    "Jezabel",
+    "Jezebel",
     "Lucy",
     "Dixie",
     "Io",

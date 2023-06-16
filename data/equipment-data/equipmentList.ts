@@ -71,7 +71,7 @@ export const TwoHandedWeapons: EquipmentModel[] = [
     },
     {
         id: 102,
-        name: "Crude bow.",
+        name: "Crude bow",
         description: "A crudely made bow. It's not very effective.",
         type: EquipmentTypesList.TwoHanded,
         stats: {
