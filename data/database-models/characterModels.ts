@@ -2,7 +2,8 @@ import { ObjectId, WithId, Document } from "mongodb";
 import Pronouns from "../character-data/pronouns";
 import Classes from "../character-data/classes";
 import Professions from "../character-data/professions";
-import { EquipmentModel, SimpleEquipmentModel } from "./equipmentModels";
+import { EquipmentModel, SavableEquipmentModel, SimpleEquipmentModel } from "./equipmentModels";
+import { PersonalityModel } from "../character-data/personalities";
 
 export interface CharacterStatsModel {
   physical: number;
@@ -16,8 +17,7 @@ export interface CharacterRelationshipModel {
   romantic: boolean;
 }
 
-export interface CharacterModel extends WithId<Document> {
-  userId: ObjectId;
+export interface BaseCharacterModel extends WithId<Document> {
   firstName: string;
   surname: string;
   nickname: string;
@@ -28,20 +28,22 @@ export interface CharacterModel extends WithId<Document> {
   class: Classes;
   profession: Professions;
   stats: CharacterStatsModel;
-  relationships: CharacterRelationshipModel[];
-  equipment: SimpleEquipmentModel[];
+  level: number;
+  experience: number;
+  personality: PersonalityModel[]
 }
 
-export interface GeneratedCharacterModel {
-  firstName: string;
-  surname: string;
-  nickname: string;
-  pronouns: Pronouns;
-  interestedIn: Pronouns[];
-  class: Classes;
-  profession: Professions;
-  quote: string;
-  age: number;
-  stats: CharacterStatsModel;
+export interface SavableCharacterModel extends BaseCharacterModel {
+  userId: ObjectId;
+  equipment: SavableEquipmentModel[];
+  relationships: CharacterRelationshipModel[];  
+}
+
+export interface DisplayedCharacterModel extends BaseCharacterModel {
+  equipment: SimpleEquipmentModel[];
+  relationships: CharacterRelationshipModel[];  
+}
+
+export interface GeneratedCharacterModel extends BaseCharacterModel {
   equipment: EquipmentModel[];
 }

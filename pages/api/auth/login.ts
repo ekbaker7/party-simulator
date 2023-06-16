@@ -65,7 +65,8 @@ export default async function handler(
 
     const jwtToken = await generateJWT(existingUser.email);
 
-    setCookie("jwt", jwtToken, { req, res, maxAge: 60 * 6 * 24})
+    // 604800 == 7 days in seconds
+    setCookie("jwt", jwtToken, { req, res, maxAge: 604800})
 
     const userInfo: UserInfoModel = {
       _id: existingUser._id,

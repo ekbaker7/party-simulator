@@ -1,8 +1,11 @@
 import axios from "axios";
-import { ChangePasswordModel, NewUserModel } from "../data/database-models/userModels";
+import {
+  ChangePasswordModel,
+  NewUserModel,
+} from "../data/database-models/userModels";
 import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 
 const useAuth = () => {
   const { user, error, loading, setAuthState } = useContext(
@@ -28,6 +31,22 @@ const useAuth = () => {
           password,
         }
       );
+
+      // Set the axios defaults
+      const jwt = getCookie("jwt");
+
+      if (!jwt) {
+        setAuthState({
+          loading: false,
+          user: null,
+          error: "There was an error logging in.",
+        });
+        return;
+      }
+
+      if (axios.defaults.headers.common["Authorization"] !== `Bearer ${jwt}`) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      }
 
       setAuthState({ loading: false, user: response.data, error: null });
       handleClose();
@@ -59,6 +78,10 @@ const useAuth = () => {
 
   const signOut = () => {
     deleteCookie("jwt");
+
+    // Delete the axios header
+    delete axios.defaults.headers.common["Authorization"];
+
     setAuthState({
       loading: false,
       user: null,
@@ -74,13 +97,13 @@ const useAuth = () => {
         `${process.env.NEXT_PUBLIC_HOST}/api/auth/changePassword`,
         { ...newPasswordInfo }
       );
-      
+
       setAuthState({ loading: false, user: user, error: null });
 
       if (response.data) {
-        return { success: true }
+        return { success: true };
       } else {
-        return { success: false }
+        return { success: false };
       }
     } catch (error: any) {
       setAuthState({
@@ -95,7 +118,7 @@ const useAuth = () => {
     login,
     signUp,
     signOut,
-    changePassword
+    changePassword,
   };
 };
 

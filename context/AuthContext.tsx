@@ -30,6 +30,8 @@ function AuthContext({ children }: { children: React.ReactNode }) {
   });
 
   const fetchUser = async () => {
+    console.log('fetch user')
+
     try { 
       setAuthState({
         loading: true,
@@ -54,6 +56,11 @@ function AuthContext({ children }: { children: React.ReactNode }) {
           Authorization: `Bearer ${jwt}`
         }
       })
+
+      // TO-DO:
+      // handle expired cookies
+
+      console.log('Set Axios default headers', jwt)
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`
 

@@ -29,6 +29,10 @@ export interface SimpleEquipmentModel {
   stats: EquipmentStatModel;
 }
 
+export interface SavableEquipmentModel {
+  id: number;
+}
+
 export function ConvertEquipmentModelToSimpleEquipmentModel(
   equipmentModel: EquipmentModel
 ): SimpleEquipmentModel {

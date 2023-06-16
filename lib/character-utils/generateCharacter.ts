@@ -15,6 +15,11 @@ import Professions from "@/data/character-data/professions";
 import { EquipmentModel } from "@/data/database-models/equipmentModels";
 import { AllEquipment } from "@/data/equipment-data/equipmentList";
 import { EquipmentTypes } from "@/data/equipment-data/equipmentTypes";
+import { ObjectId } from "mongodb";
+import {
+  PersonalityModel,
+  Personalities,
+} from "@/data/character-data/personalities";
 
 export interface CharacterGenerationOptions {
   pronouns?: Pronouns;
@@ -35,6 +40,7 @@ export default function generateCharacter(
   characterGenerationOptions: CharacterGenerationOptions
 ): GeneratedCharacterModel {
   const newCharacter: GeneratedCharacterModel = {
+    _id: new ObjectId(),
     firstName: "",
     surname: "",
     nickname: "",
@@ -50,6 +56,9 @@ export default function generateCharacter(
       charisma: 0,
     },
     equipment: [],
+    level: 1,
+    experience: 0,
+    personality: [],
   };
 
   if (!characterGenerationOptions?.pronouns) {
@@ -84,6 +93,7 @@ export default function generateCharacter(
 
   newCharacter.stats = generateStats(newCharacter.class);
   newCharacter.equipment = generateInitialEquipment(newCharacter.class);
+  newCharacter.personality = generatePersonalities();
 
   return newCharacter;
 }
@@ -213,7 +223,7 @@ function generateInitialEquipment(job: Classes): EquipmentModel[] {
   let equipment: EquipmentModel[] = [];
   let remainingCost = 20;
 
-  let availableEquipment = AllEquipment.filter(
+  let availableEquipment = _.cloneDeep(AllEquipment).filter(
     (equip) =>
       equip.equippableClasses.includes(job) && equip.price <= remainingCost
   );
@@ -293,4 +303,40 @@ function filterRemainingEquipment(
   });
 
   return newAvailableEquipment;
+}
+
+function generatePersonalities(): PersonalityModel[] {
+  let personalities: PersonalityModel[] = [];
+  let allPersonalities = _.cloneDeep(Personalities);
+
+  for (let i = 0; i < 3; i++) {
+    allPersonalities = generatePersonalityAndFilterList(allPersonalities, personalities);
+  }
+  
+  return personalities;
+}
+
+function generatePersonalityAndFilterList (remainingPersonalities: PersonalityModel[], personalities: PersonalityModel[]): PersonalityModel[] {
+  let personality = _.sample(remainingPersonalities) as PersonalityModel;
+  personalities.push(personality)
+  remainingPersonalities = filterRemainingPersonalities(remainingPersonalities, personality);
+  return remainingPersonalities;
+}
+
+function filterRemainingPersonalities(
+  remainingPersonalities: PersonalityModel[],
+  newPersonality: PersonalityModel
+): PersonalityModel[] {
+  // First, remove the chosen personality
+  // Then, remove any personalities the newPersonality is incompatible with
+  // Then, remove any personalities incompatible with the newPersonality
+  //    (that somehow did not get picked up the first time, in case I missed a 2-way incompatibility)
+  let newAvailablePersonalities = _.cloneDeep(remainingPersonalities).filter(
+    (personality) =>
+      personality.Id !== newPersonality.Id &&
+      !newPersonality.Incompatibile.includes(personality.Id) &&
+      !personality.Incompatibile.includes(newPersonality.Id)
+  );
+
+  return newAvailablePersonalities;
 }

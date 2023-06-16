@@ -1,18 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import CharacterRepository from "@/lib/repositories/characterRepository";
 import {
-  CharacterModel,
-  CharacterStatsModel,
   CharacterRelationshipModel,
+  DisplayedCharacterModel,
 } from "@/data/database-models/characterModels";
-import { ObjectId } from "mongodb";
 import { decodeToken } from "@/lib/authUtils";
 import UserRepository from "@/lib/repositories/userRepository";
-import Pronouns from "@/data/character-data/pronouns";
-import Classes from "@/data/character-data/classes";
-import Professions from "@/data/character-data/professions";
-import { ConvertEquipmentModelToSimpleEquipmentModel, EquipmentModel } from "@/data/database-models/equipmentModels";
-import generateCharacter, { CharacterGenerationOptions } from "@/lib/character-utils/generateCharacter";
+import { ConvertEquipmentModelToSimpleEquipmentModel } from "@/data/database-models/equipmentModels";
+import generateCharacter, {
+  CharacterGenerationOptions,
+} from "@/lib/character-utils/generateCharacter";
 
 export default async function handler(
   req: NextApiRequest,
@@ -56,26 +52,21 @@ export default async function handler(
     const { pronouns, interestedIn, job, profession } = req.body;
 
     const characterGenerationOptions: CharacterGenerationOptions = {
-        pronouns,
-        interestedIn,
-        job,
-        profession,
+      pronouns,
+      interestedIn,
+      job,
+      profession,
     };
 
     const generatedCharacter = generateCharacter(characterGenerationOptions);
 
-    const characterStats: CharacterStatsModel = {
-      physical: 0,
-      magical: 0,
-      charisma: 0,
-    };
-
-    const newCharacter: CharacterModel = {
-      _id: new ObjectId(),
-      userId: existingUser._id,    
+    const newCharacter: DisplayedCharacterModel = {
+      userId: existingUser._id,
       relationships: [] as CharacterRelationshipModel[],
       ...generatedCharacter,
-      equipment: generatedCharacter.equipment.map(equip => ConvertEquipmentModelToSimpleEquipmentModel(equip)),
+      equipment: generatedCharacter.equipment.map((equip) =>
+        ConvertEquipmentModelToSimpleEquipmentModel(equip)
+      ),
     };
 
     res.status(200).json({ newCharacter });
