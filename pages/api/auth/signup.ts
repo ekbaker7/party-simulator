@@ -70,14 +70,23 @@ export default async function handler(
 
     const savedUser = await userRepository.saveNewDocument(newUser);
 
-    const jwtToken = await generateJWT(savedUser.email)
+    const grabbedUser = await userRepository.fetchUserByUsername(username);
 
-    setCookie("jwt", jwtToken, { req, res, maxAge: 60 * 6 * 24})
+    if (!grabbedUser) {
+      res
+        .status(401)
+        .json({ errorMessage: "Username or password is invalid." });
+      return;
+    }
+
+    const jwtToken = await generateJWT(grabbedUser.email)
+
+    setCookie("jwt", jwtToken, { req, res, maxAge: 604800})
 
     const userInfo: UserInfoModel = {
-      _id: savedUser._id,
-      email: savedUser.email,
-      username: savedUser.username
+      _id: grabbedUser._id,
+      email: grabbedUser.email,
+      username: grabbedUser.username
     }
 
     res.status(200).json(userInfo);

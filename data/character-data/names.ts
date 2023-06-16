@@ -21,7 +21,7 @@ export const FirstNames: { [key: string]: string[] } = {
     "Popo",
     "Amy",
   ],
-  OTHER: ["Sam", "Riley", "Blake", "Quinns", "Remy", "Frankie", "Alex"],
+  OTHER: ["Sam", "Blake", "Quinns", "Remy", "Frankie", "Alex"],
 };
 
 export const Surnames: string[] = [

@@ -65,6 +65,14 @@ const useAuth = () => {
         `${process.env.NEXT_PUBLIC_HOST}/api/auth/signup`,
         { ...newUser }
       );
+
+      // Set the axios defaults
+      const jwt = getCookie("jwt");
+      if (axios.defaults.headers.common["Authorization"] !== `Bearer ${jwt}`) {
+        console.log('set sign up header')
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      }
+
       setAuthState({ loading: false, user: response.data, error: null });
       handleClose();
     } catch (error: any) {
