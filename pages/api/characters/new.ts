@@ -17,8 +17,6 @@ export default async function handler(
   if (req.method === "POST") {
     const bearerToken = req.headers["authorization"] as string;
 
-    console.log('bearerToken', bearerToken)
-
     if (!bearerToken) {
       res.status(401).json({ errorMessage: "Unauthorized request" });
       return;
@@ -30,8 +28,6 @@ export default async function handler(
       payload: { email: string };
       error: any;
     };
-
-    console.log({returnedObj})
 
     if (
       !returnedObj.payload ||
@@ -47,8 +43,6 @@ export default async function handler(
     const existingUser = await userRepository.fetchUserByEmail(
       returnedObj.payload.email
     );
-
-    console.log(existingUser)
 
     if (!existingUser) {
       res.status(401).json({ errorMessage: "Unauthorized request" });

@@ -69,7 +69,6 @@ const useAuth = () => {
       // Set the axios defaults
       const jwt = getCookie("jwt");
       if (axios.defaults.headers.common["Authorization"] !== `Bearer ${jwt}`) {
-        console.log('set sign up header')
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       }
 
