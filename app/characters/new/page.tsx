@@ -5,7 +5,6 @@ import NewCharacterDisplay from "@/components/characters-page/new-characters/New
 import SidebarButtons from "@/components/characters-page/new-characters/SidebarButtons";
 import { DisplayedCharacterModel } from "@/data/database-models/characterModels";
 import axios from "axios";
-import { getCookie } from "cookies-next";
 import { useState } from "react";
 
 function NewCharacterPage() {
@@ -14,10 +13,10 @@ function NewCharacterPage() {
   const [generatedCharacters, setGeneratedCharacters] = useState<
     DisplayedCharacterModel[]
   >([]);
+  const [loading, setLoading] = useState(false);
+  const [actionType, setActionType] = useState("");
 
   const fetchData = async () => {
-    const jwt = getCookie("jwt");
-
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_HOST}/api/characters/new`,
       {
@@ -35,8 +34,25 @@ function NewCharacterPage() {
     setGeneratedCharacters([newCharacter, ...generatedCharacters]);
   };
 
-  const clickHandler = async () => {
+  const saveClickHandler = async () => {
+    setLoading(true);
+    setActionType("SAVE");
+    await timeout(1000);
+    setLoading(false);
+    setActionType("");
+    console.log('Saved!')
+  };
+
+  const timeout = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const generateClickHandler = async () => {
+    setLoading(true);
+    setActionType("GENERATE");
     await fetchData();
+    setLoading(false);
+    setActionType("");
   };
 
   const onCharacterSelect = (character: DisplayedCharacterModel) => {
@@ -52,9 +68,11 @@ function NewCharacterPage() {
           onCharacterSelect={onCharacterSelect}
         />
         <SidebarButtons
-          generateClickHandler={clickHandler}
-          saveClickHandler={clickHandler}
+          generateClickHandler={generateClickHandler}
+          saveClickHandler={saveClickHandler}
           character={selectedCharacter}
+          loading={loading}
+          actionType={actionType}
         />
       </div>
       <NewCharacterDisplay character={selectedCharacter} />
